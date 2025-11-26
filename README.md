@@ -20,6 +20,10 @@ A Netflix-inspired web application built with React that showcases movies and TV
 ### Routing
 - **React Router DOM** (^7.9.6) - Declarative routing for React applications
 
+### Authentication & Backend
+- **Firebase** (^12.6.0) - Backend-as-a-service platform for authentication, database, and hosting
+- **React Firebase Hooks** (^5.1.1) - React Hooks for Firebase authentication and database interactions
+
 ### Build Tools & Development
 - **Vite** (^7.2.4) - Next generation frontend build tool
 - **@vitejs/plugin-react** (^5.1.1) - React plugin for Vite with Fast Refresh support
@@ -51,10 +55,16 @@ npm install
 ```
 
 3. Set up environment variables:
-Create a `.env` file in the root directory and add your TMDb API credentials:
+Create a `.env` file in the root directory and add your TMDb API credentials and Firebase configuration:
 ```
 VITE_MOVIE_DB_API_ACCESS_TOKEN=<your_token>
 VITE_MOVIE_DB_API_KEY=<your_key>
+VITE_FIREBASE_API_KEY=<your_firebase_api_key>
+VITE_FIREBASE_AUTH_DOMAIN=<your_firebase_auth_domain>
+VITE_FIREBASE_PROJECT_ID=<your_firebase_project_id>
+VITE_FIREBASE_STORAGE_BUCKET=<your_firebase_storage_bucket>
+VITE_FIREBASE_MESSAGING_SENDER_ID=<your_firebase_messaging_sender_id>
+VITE_FIREBASE_APP_ID=<your_firebase_app_id>
 ```
 
 ## 🚀 Running the Project
@@ -118,16 +128,32 @@ netflix-clone/
 
 ## 🔌 API Integration
 
-The project integrates with **The Movie Database (TMDb) API** to fetch:
+The project integrates with:
+
+### The Movie Database (TMDb) API
 - Movie listings and metadata
 - Video trailers and clips
-- User authentication (if implemented)
+
+### Firebase
+- User authentication (Sign up, Login)
+- Secure user session management
+- Backend data storage
 
 ## 🌐 Environment Variables
 
 Required environment variables (in `.env`):
+
+### TMDb API
 - `VITE_MOVIE_DB_API_ACCESS_TOKEN` - TMDb API access token
 - `VITE_MOVIE_DB_API_KEY` - TMDb API key
+
+### Firebase Configuration
+- `VITE_FIREBASE_API_KEY` - Firebase API key
+- `VITE_FIREBASE_AUTH_DOMAIN` - Firebase auth domain
+- `VITE_FIREBASE_PROJECT_ID` - Firebase project ID
+- `VITE_FIREBASE_STORAGE_BUCKET` - Firebase storage bucket
+- `VITE_FIREBASE_MESSAGING_SENDER_ID` - Firebase messaging sender ID
+- `VITE_FIREBASE_APP_ID` - Firebase app ID
 
 ## 📝 Notes
 

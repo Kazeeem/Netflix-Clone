@@ -1,18 +1,24 @@
-import './Login.css'
-import logo from '../../assets/logo.png'
 import { useState } from 'react'
 import { login, signup } from '../../firebase'
+import { toast } from 'react-toastify'
+import './Login.css'
+import logo from '../../assets/logo.png'
+import netflix_spinner from '../../assets/netflix_spinner.gif'
 
 const Login = () => {
   const [signState, setSignState] = useState('Sign In');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     if (!email || !password || (signState === 'Sign Up' && !name)) {
-      alert('Please fill all fields');
+      toast.error('Please fill all fields');
+      setLoading(false);
       return;
     }
 
@@ -22,10 +28,16 @@ const Login = () => {
     else {
       await signup(name, email, password);
     }
+
+    setLoading(false);
   }
 
 
   return (
+    loading ? <div className="login-spinner">
+      <img src={netflix_spinner} alt="loading..." />
+    </div>
+    :
     <div className="login">
       <img src={logo} alt="" className='login-logo' />
       <div className="login-form">

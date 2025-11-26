@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,6 +18,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Format firebase errors: convert e.g. "invalid-email" -> "Invalid Email"
+const formatFirebaseError = (err) => {
+  const raw = err && err.code ? (err.code.split('/')[1] || '') : (err && err.message ? err.message : 'Error');
+  return raw
+    .toString()
+    .replace(/[-_]+/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
+}
+
 const signup = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -30,7 +43,8 @@ const signup = async (name, email, password) => {
     });
   } catch (error) {
     console.error("Error signing up:", error);
-    alert(error);
+    // toast.error(error.message.split('/')[1].split('-').join(' '));
+    toast.error(formatFirebaseError(error));
   }
 }
 
@@ -39,12 +53,13 @@ const login = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.log("Error logging in:", error);
-    alert(error);
+    toast.error(formatFirebaseError(error));
   }
 }
 
 const logout = () => {
   signOut(auth);
+  toast.success("Logged out successfully");
 }
 
 export { auth, db, signup, login, logout };
